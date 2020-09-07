@@ -1,28 +1,28 @@
 class Solution {
+    
+    List<String> res = new ArrayList<>();
+    
     public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<>();
-        helper(res, new StringBuilder(), 0, 0, n);
+        // constrcut a string object out of a char array of length 2*n from current index 
+        // and contains well-formed parentheses. 
+        backtrack(new char[n*2], 0, 0, 0, n);
         return res;
     }
     
-    private void helper(List<String> res, StringBuilder sb, int open, int close, int max) {
-        
-        // base case
-        if (sb.length() == max * 2) {
-            res.add(sb.toString());
+    private void backtrack(char[] arr, int currIndex, int open, int close, int max) {
+        if (close == max) {
+            res.add(new String(arr));
             return;
         }
         
         if (open < max) {
-            sb.append('(');
-            helper(res, sb, open+1, close, max);
-            sb.setLength(sb.length() - 1);
+            arr[currIndex] = '(';
+            backtrack(arr, currIndex+1, open+1, close, max);
         }
         
         if (close < open) {
-            sb.append(')');
-            helper(res, sb, open, close+1, max);
-            sb.setLength(sb.length() - 1);
+            arr[currIndex] = ')';
+            backtrack(arr, currIndex+1, open, close+1, max);
         }
     }
 }
