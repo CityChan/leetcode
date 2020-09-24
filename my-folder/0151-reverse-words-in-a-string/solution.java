@@ -1,10 +1,12 @@
 class Solution {
     public String reverseWords(String s) {
         char[] arr = s.toCharArray();
+        // reverse entire string
         reverse(arr, 0, arr.length-1);
         // reverse each word
         int start = 0;
         while(start<arr.length){
+            // skip space
             while(start<arr.length&&arr[start]==' '){
                 start++;
             }
@@ -15,16 +17,17 @@ class Solution {
             while(end<arr.length&&arr[end]!=' '){
                 end++;
             }
+            // [start, end) is a word
             reverse(arr, start, end-1);
             start = end;
         }
         // remove multiple space
         int i=0;
         int j=0;
+        while(j<arr.length&&arr[j]==' '){
+            j++;
+        }
         while(j<arr.length){
-            while(j<arr.length&&arr[j]==' '){
-                j++;
-            }
             while(j<arr.length&&arr[j]!=' '){
                 arr[i++] = arr[j++];
             }
@@ -35,6 +38,7 @@ class Solution {
                 arr[i++] = ' ';
             }
         }
+       
         
         return String.valueOf(arr, 0, i);
     }
