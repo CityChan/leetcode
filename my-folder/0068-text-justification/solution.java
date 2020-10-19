@@ -6,7 +6,7 @@ class Solution {
     while (i < words.length) {
       int j = i + 1;
       int curLen = words[i].length();
-      while (j < words.length && (curLen + words[j].length() + (j - i - 1) < maxWidth)) {
+      while (j < words.length && (curLen + words[j].length() + (j - i) <= maxWidth)) {
         curLen += words[j].length();
         j++;
       }
