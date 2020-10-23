@@ -1,40 +1,33 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> ans = new ArrayList<>();
+        int[] counter = new int[26];
         
-        if (p.length() > s.length()) return ans;
-        
-        Map<Character, Integer> reference = new HashMap<>();
-        for (char c : p.toCharArray()) {
-            reference.put(c, reference.getOrDefault(c, 0) + 1);
+        for(int i=0;i<p.length();i++){
+            counter[p.charAt(i)-'a']++;
         }
+        int left = 0;
+        int right = 0;
+        int match = p.length();
+        List<Integer> list = new ArrayList<>();
         
-        Map<Character, Integer> map = new HashMap<>();
-        int start = 0, end = 0, match = 0;
-        
-        while (end < s.length()) {
-            char c1 = s.charAt(end);
-            if (reference.containsKey(c1)) {
-                map.put(c1, map.getOrDefault(c1, 0) + 1);
-                if (map.get(c1).equals(reference.get(c1))) match++;
+        while(right<s.length()){
+            char ch = s.charAt(right);
+            counter[ch-'a']--;
+            if(counter[ch-'a']>=0){
+                match--;
             }
-            
-            while (match == reference.size()) {
-                if (end - start + 1 == p.length()) {
-                    ans.add(start);
-                }
-                
-                char c2 = s.charAt(start);
-                if (reference.containsKey(c2)) {
-                    map.put(c2, map.get(c2) - 1);
-                    if (map.get(c2) < reference.get(c2)) {
-                        match--;
-                    }
-                }
-                start++;
+            if(match==0){
+                list.add(left);
             }
-            end++;
+            if(right-left+1==p.length()){
+                counter[s.charAt(left) - 'a']++;
+                if(counter[s.charAt(left)-'a']>=1){
+                    match++;
+                }
+                left++;
+            }
+            right++;
         }
-        return ans;
+        return list;
     }
 }
