@@ -14,4 +14,4 @@ class Solution:
         
         size = len(arr)
             
-        return sum(1 for i in range(size-2) for j in range(i+1, size-1) for k in range(j+1, size) if is_good(i,j,k))
+        return sum(is_good(i,j, k) for i in range(size-2) for j in range(i+1, size-1) for k in range(j+1, size))
