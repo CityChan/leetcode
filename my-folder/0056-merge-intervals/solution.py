@@ -1,14 +1,11 @@
-class Solution(object):
-    def merge(self, intervals):
-        """
-        :type intervals: List[List[int]]
-        :rtype: List[List[int]]
-        """
-        out = []
-        for i in sorted(intervals, key=lambda j: j[0]):
-            if len(out)==0 or i[0]>out[-1][1] :
-                out+=i,
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals = sorted(intervals, key = lambda x : x[0])
+        res = [intervals[0]]
+        for i in range(1, len(intervals)):
+            if intervals[i][0]<=res[-1][1]:
+                res[-1][1] = max(res[-1][1], intervals[i][1])
             else:
-                out[-1] = [out[-1][0], max(out[-1][1], i[1])]
-        return out
-
+                res.append(intervals[i])
+        return res
+        
