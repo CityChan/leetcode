@@ -4,25 +4,23 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
-        def dp(grid, i, j):
-            if i<0 or j<0 or i>=len(grid) or j>=len(grid[0]) :
-                return
-            if grid[i][j]=='1':
-                grid[i][j]='#'
-            else:
-                return
-            dp(grid, i+1, j)
-            dp(grid, i-1, j)
-            dp(grid, i, j+1)
-            dp(grid, i, j-1)
-            return
         
+        def search_p(grid, i, j, m, n):
+            grid[i][j]="2"
+            for aa, bb in ((-1, 0), (1, 0), (0, 1), (0, -1)):
+                ii, jj = i+aa, j+bb
+                if ii>=0 and ii<m and jj>=0 and jj<n and grid[ii][jj]=="1":
+                    search_p(grid, ii, jj, m, n)
+                    
         c = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j]=='1':
-                    dp(grid, i, j)
+        m = len(grid)
+        n = len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j]=="1":
+                    search_p(grid, i, j, m, n)
                     c+=1
         return c
-                
+        
+        
         
