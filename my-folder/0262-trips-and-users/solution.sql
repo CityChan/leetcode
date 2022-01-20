@@ -1,20 +1,12 @@
 # Write your MySQL query statement below
+# SELECT Request_at as Day,
+#        ROUND(COUNT(IF(Status != 'completed', TRUE, NULL)) / COUNT(*), 2) AS 'Cancellation Rate'
+# FROM Trips
+# WHERE (Request_at BETWEEN '2013-10-01' AND '2013-10-03')
+#       AND Client_id NOT IN (SELECT Users_Id FROM Users WHERE Banned = 'Yes')
+# GROUP BY Request_at;
 
-
-# select 
-# t.Request_at Day, 
-# round(sum(case when t.Status like 'cancelled_%' then 1 else 0 end)/count(*),2) Rate
-# from Trips t 
-# inner join Users u 
-# on t.Client_Id = u.Users_Id and u.Banned='No'
-# where t.Request_at between '2013-10-01' and '2013-10-03'
-# group by t.Request_at
-
-select 
-t.Request_at Day, 
-round(sum(case when t.Status like 'cancelled_%' then 1 else 0 end)/count(*), 2) as "Cancellation rate"
-from Trips t
-where t.Client_Id in (select Users_Id from Users where banned = 'No')
-and t.Driver_Id in (select Users_Id from Users where banned = 'No')
-and t.request_at between "2013-10-01" and "2013-10-03"
-group by t.request_at
+SELECT request_at day, ROUND(SUM(IF(Status !='completed', 1, 0))/count(*),2) AS "cancellation rate" FROM
+(SELECT * FROM Trips WHERE client_id IN (SELECT users_id FROM Users WHERE banned="No" and role = "client")
+and driver_id IN (SELECT users_id FROM Users WHERE banned="No" and role = "driver")) T1
+Where request_At BETWEEN '2013-10-01' AND '2013-10-03' GROUP BY REQUEST_AT
