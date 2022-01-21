@@ -4,16 +4,17 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        i, j = 0, len(height)-1
+        left_idx, right_idx = 0, len(height)-1
         water = 0
-        while i < j:
-            water = max(water, (j-i)*min(height[i], height[j]))
-            if height[i]<height[j]:
-                i+=1
-            elif height[i]>height[j]:
-                j-=1
+        while left_idx<right_idx:
+            water = max(water, min(height[left_idx], height[right_idx])*(right_idx-left_idx))
+            if height[left_idx]<height[right_idx]:
+                left_idx+=1
+            elif height[left_idx]>height[right_idx]:
+                right_idx-=1
             else:
-                i+=1
-                j-=1
+                left_idx+=1
+                right_idx-=1
         return water
+                
         
