@@ -1,8 +1,15 @@
-class Solution:
-    def maxSubArray(self, nums: List[int]) -> int:
-        max_curr = max_global = nums[0]
-        for i in range(1, len(nums)):
-            max_curr = max(nums[i], max_curr + nums[i])
-            max_global = max(max_curr, max_global)
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
         
-        return max_global
+        now_subsum=nums[0]
+        max_subsum=nums[0]
+        for i in nums[1:]:
+            now_subsum = max(now_subsum+i, i)
+            max_subsum = max(now_subsum, max_subsum)
+        return max_subsum
+            
+        
