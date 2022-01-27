@@ -4,17 +4,15 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        left = 0
-        right = len(s)-1
-        while left < right:
-            if s[left]!=s[right]:
-                if s[left+1: right+1]==s[right: left: -1] or \
-                s[left: right]==s[-len(s)+right-1: -len(s)+left-1:-1]:
-                    return True
-                else:
-                    return False
+        i, j = 0, len(s)-1
+        while i<=j:
+            if s[i]==s[j]:
+                i+=1
+                j-=1
             else:
-                left+=1
-                right-=1
-        return True
+                break
         
+        if i>j:
+            return True
+        else:
+            return True if s[i:j]==s[i:j][::-1] or s[i+1:j+1]==s[i+1:j+1][::-1] else False
