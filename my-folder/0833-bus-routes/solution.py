@@ -6,12 +6,14 @@ class Solution(object):
                 to_routes[j].add(i)
         bfs = [(S, 0)]
         seen = set([S])
-        for stop, bus in bfs:
+        while bfs:
+            stop, bus = bfs.pop(0)
             if stop == T: return bus
             for i in to_routes[stop]:
-                for j in routes[i]:
+                while routes[i]:
+                    j = routes[i].pop()
                     if j not in seen:
                         bfs.append((j, bus + 1))
                         seen.add(j)
-                routes[i] = []  # seen route
+                #routes[i] = []  # seen route
         return -1
