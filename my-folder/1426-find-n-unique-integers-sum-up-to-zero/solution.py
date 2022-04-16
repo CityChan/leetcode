@@ -1,12 +1,7 @@
-class Solution:
-    def sumZero(self, n: int) -> List[int]:
-        ans = [0] * n
-        left = 0
-        right = n - 1
-        while left < right:
-            ans[left] = - right
-            ans[right] = right
-            left = left+1
-            right = right-1
-
-        return ans
+class Solution(object):
+    def sumZero(self, n):
+        """
+        :type n: int
+        :rtype: List[int]
+        """
+        return list(range(1, n//2+1)) + list(range(-1, -(n//2)-1, -1)) + ([0] if n%2==1 else [])
