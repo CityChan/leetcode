@@ -5,14 +5,8 @@ class Solution(object):
         :type target: str
         :rtype: str
         """
-        i = 0
-        while i < len(letters):
-            if letters[i]<=target:
-                i+=1
-            else:
-                break
-        if i==len(letters):
-            return letters[0]
-        else:
-            return letters[i]
+        for c in letters:
+            if c>target:
+                return c
+        return letters[0]
         
