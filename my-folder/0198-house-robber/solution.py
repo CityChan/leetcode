@@ -11,6 +11,6 @@ class Solution(object):
         res[0] = nums[0]
         res[1] = max(nums[0], nums[1])
         for i in range(2, len(nums)):
-            res[i] = max(res[:i-1])+nums[i]
-        return max(res)
+            res[i] = max(res[i-1], res[i-2]+nums[i])
+        return max(res[-1], res[-2])
         
