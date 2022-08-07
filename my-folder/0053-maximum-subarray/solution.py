@@ -12,7 +12,7 @@ class Solution(object):
         #     max_subsum = max(now_subsum, max_subsum)
         # return max_subsum
         min_sum = 0
-        max_sum = -10001
+        max_sum = nums[0]-10001
         now_sum = 0
         for i in nums:
             now_sum+=i
