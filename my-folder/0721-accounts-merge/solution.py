@@ -11,7 +11,7 @@ class Solution(object):
                 for j in email_dict[i]:
                     if j in ori_list:
                         dfs(j, ori_list, temp)
-            return ori_list, temp
+            return temp
         
         res = []
         email_dict = dict()
@@ -25,8 +25,6 @@ class Solution(object):
         while len(ori_list)>0:           
             temp = set()
             res+=[[accounts[ori_list[0]][0]]]
-            ori_list, temp = dfs(ori_list[0], ori_list, temp)
+            temp = dfs(ori_list[0], ori_list, temp)
             res[-1]+=sorted(temp)
         return res
-            
-    
