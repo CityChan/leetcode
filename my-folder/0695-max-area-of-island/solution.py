@@ -8,19 +8,21 @@ class Solution(object):
             if i<0 or i>=len(grid) or j<0 or j>=len(grid[0]) or grid[i][j]!=1:
                 return 0
             else:
-                now_count=1
+                area[0]+=1
                 grid[i][j]=0
-                now_count+=dfs(grid, i-1, j)
-                now_count+=dfs(grid, i+1, j)
-                now_count+=dfs(grid, i, j-1)
-                now_count+=dfs(grid, i, j+1)
-            return now_count
+                dfs(grid, i-1, j)
+                dfs(grid, i+1, j)
+                dfs(grid, i, j-1)
+                dfs(grid, i, j+1)
+            # return now_count+1
                 
         max_area = 0
         for i in range(len(grid)):
             for j in range(len(grid[0])):
-                if grid[i][j]==1:                
-                    max_area = max(max_area, dfs(grid, i, j))
+                area=[0]
+                if grid[i][j]==1:    
+                    dfs(grid, i, j)
+                    max_area = max(max_area, area[0])
         
         
         return max_area
