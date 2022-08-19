@@ -4,20 +4,29 @@ class Solution(object):
         for i, route in enumerate(routes):
             for j in route:
                 to_routes[j].add(i)
-        bfs = [(S, 0)]
-        seen = set([S])
+        # route_bool = [False]*len(routes)
+        bfs = [S]
+        # seen = set([S])
         seen_routes = set([])
+        step = 0
         while bfs:
-            stop, bus = bfs.pop(0)
-            if stop == T: return bus
-            for i in to_routes[stop]:
-                if i not in seen_routes:
-                    for j in routes[i]:
-                        if j not in seen:
-                            if j==T:
-                                return bus+1
-                            bfs.append((j, bus + 1))
-                            seen.add(j)
-                    seen_routes.add(i)
-                #routes[i] = []  # seen route
+            # print(bfs)
+            sz = len(bfs)
+            for i in range(sz):
+                now = bfs.pop(0)
+               
+                if now==T:
+                  
+                    return step
+                else:
+     
+                    for j in to_routes[now]:
+                        if j not in seen_routes:
+                            for nxt in routes[j]:
+                                # if nxt not in seen:
+                                    bfs.append(nxt)
+                                    # seen.add(nxt)
+                        seen_routes.add(j)
+            step+=1
+
         return -1
