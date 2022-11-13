@@ -1,8 +1,6 @@
 # Write your MySQL query statement below
 SELECT team_name, matches_played, points, goal_for, goal_against, goal_diff
 FROM
-(SELECT *
- FROM
 (
     SELECT home_team_id, COUNT(*) matches_played, 
     SUM(CASE WHEN home_team_goals>away_team_goals THEN 3 
@@ -19,6 +17,6 @@ FROM
 )t2
 LEFT JOIN Teams t1
 ON t2.home_team_id = t1.team_id
-ORDER BY points DESC, goal_diff DESC, team_name ASC) t3
+ORDER BY points DESC, goal_diff DESC, team_name ASC
 
 
