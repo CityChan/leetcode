@@ -1,11 +1,15 @@
-class Solution:
-    def generate(self, numRows: int) -> List[List[int]]:
-        m=[]
-        for i in range(1,numRows+1):
-            c=1
-            t=[]
-            for j in range(1,i+1):
-                t.append(c)
-                c=int(c*(i-j)/j)
-            m.append(t)
-        return m
+class Solution(object):
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+
+        res = [[1]]
+        for i in range(1, numRows):
+            res += [map(lambda x, y: x+y, res[-1] + [0], [0] + res[-1])]
+        return res#[:numRows]
+            
+        
+        
+        
