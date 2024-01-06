@@ -1,36 +1,28 @@
-class Solution(object):
-    def trap(self, height):
-        """
-        :type height: List[int]
-        :rtype: int
-        """
-        if len(height)<3:
-            return 0
-        s = 0
-        i = 0
-        j = len(height)-1
-        while i<len(height) and height[i]==0:
-            i+=1
-        while j>0 and height[j]==0:
-            j-=1
-        h_leftmax = height[i]
-        h_rightmax = height[j]
-        while i<=j:
-            if h_leftmax<h_rightmax:
-                if height[i]<h_leftmax:
-                    s+=(h_leftmax-height[i])
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        water_amt = 0
+        left = -1
+        right = len(height)
+        left_max = 0
+        right_max = 0
+        while left<right:
+            if left_max<right_max:
+                left+=1
+                if height[left]>left_max:
+                    left_max = height[left]
                 else:
-                    h_leftmax=height[i]
-                i+=1
+                    water_amt+=(left_max-height[left])
+                    # print(water_amt)                  
+
             else:
-                if height[j]<h_rightmax:
-                    s+=(h_rightmax-height[j])
+                right-=1
+                if height[right]>right_max:
+                    right_max = height[right]
                 else:
-                    h_rightmax=height[j]
-                j-=1
-                
+                    water_amt+=(right_max-height[right])
+                    # print(water_amt)
+
+        return water_amt
+            
+            
         
-        return s
-                
-            
-            
