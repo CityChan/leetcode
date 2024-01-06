@@ -1,14 +1,12 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        if len(nums) == 0:
-            return 0
-        
-        index = 0
-        for i in range(1, len(nums)):
-            if nums[index] < nums[i]:
-                index += 1
-                nums[index] = nums[i]
-        nums = nums[: index+1]        
-        
-        return len(nums)
+        left = 0
+        right = 0
+        while right<len(nums):
+            if nums[right]!=nums[left]:
+                left+=1
+                nums[left]=nums[right]
+            right+=1
+        return left+1
+                
         
