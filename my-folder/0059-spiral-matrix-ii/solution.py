@@ -1,28 +1,31 @@
-class Solution(object):
-    def generateMatrix(self, n):
-        """
-        :type n: int
-        :rtype: List[List[int]]
-        """
-        output = [[0]*n for i in range(n)]
-        count = 1
-        num = (n+1)//2
-        for layer in range(num):
-            for i in range(layer, n-layer):
-                output[layer][i] = count
-                count+=1
-            for i in range(layer+1, n-layer):
-                output[i][n-layer-1] = count
-                count+=1
-            for i in range(n-layer-2, layer-1, -1):
-                output[n-layer-1][i] = count
-                count+=1
-            for i in range(n-layer-2, layer, -1):
-                output[i][layer] = count
-                count+=1
-        return output
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        count = 0
+        l = 0
+        u = 0
+        r = n-1
+        d = n-1
+        res = [[0 for _ in range(n)] for _ in range(n)]
+        while count<n*n:
+            if u<=d:
+                for i in range(l, r+1):
+                    count+=1
+                    res[u][i] = count
+                u+=1
+            if l<=r:
+                for i in range(u, d+1):
+                    count+=1
+                    res[i][r] = count
+                r-=1
+            if d>=u:
+                for i in range(r, l-1, -1):
+                    count+=1
+                    res[d][i] = count
+                d-=1
+            if r>=l:
+                for i in range(d, u-1, -1):
+                    count+=1
+                    res[i][l] = count
+                l+=1
             
-            
-            
-            
-        
+        return res
