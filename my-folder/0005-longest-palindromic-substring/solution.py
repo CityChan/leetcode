@@ -1,29 +1,35 @@
-class Solution(object):
-    def longestPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        def helper(s, i, j):
-            while i>=0 and j<len(s) and s[i]==s[j]:
-                i-=1
-                j+=1
-            return i+1, j-1
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        
+        def ifPalindrome(l, r):
+            while l>=0 and r<len(s):
+                if s[l]==s[r]:
+                    l-=1
+                    r+=1
+                else:
+                    break
+            return l+1, r-1
         
         max_len = 0
-        max_str = ""
-        for n in range(len(s)):
-            i, j = helper(s, n, n)
-            if j-i+1>max_len:
-                max_len = j-i+1
-                max_str = s[i:j+1]
-            if (n+1)<len(s) and s[n]==s[n+1]:
-                i, j = helper(s, n, n+1)
-                if j-i+1>max_len:
-                    max_len = j-i+1
-                    max_str = s[i:j+1]
-        return max_str
+        max_l = 0
+        max_r = 0
+        
+        for i in range(len(s)):
+            l, r = ifPalindrome(i, i)
+            if r-l+1>max_len:
+                max_l = l
+                max_r = r
+                max_len = r-l+1
+
+        for i in range(len(s)-1):
+            l, r = ifPalindrome(i, i+1)
+            if r-l+1>max_len:
+                max_l = l
+                max_r = r
+                max_len = r-l+1
                 
+        return s[max_l:max_r+1]
                 
+            
             
         
