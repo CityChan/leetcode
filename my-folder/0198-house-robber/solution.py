@@ -1,12 +1,9 @@
-class Solution(object):
-    def rob(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        pre = 0
-        now = nums[0]
-        for i in range(1, len(nums)):
-            now, pre = max(pre+nums[i], now), now
-        return max(pre, now)
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        prev_max = 0
+        prev_max_skip = 0
+        for i in nums:
+            # final_max = max(prev_max_skip+nums[i], prev_max)
+            prev_max, prev_max_skip = max(prev_max_skip+i, prev_max), prev_max
+        return max(prev_max_skip, prev_max)
         
