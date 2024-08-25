@@ -1,20 +1,18 @@
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        starts = sorted([x[0] for x in intervals])
-        ends = sorted([x[1] for x in intervals])
-        max_count=0
-        count_=0
-        i = 0
-        j = 0
-        while i<len(starts):
-            if starts[i]<ends[j]:
-                i+=1
-                count_+=1
+        intervals.sort(key=lambda x: x[0])
+        avaiable = [intervals[0][1]]
+        res = 1
+        n = len(intervals)
+        for i in range(1,n):
+            start = intervals[i][0]
+            end = intervals[i][1]
+            min_avai = min(avaiable)
+            if start < min_avai:
+                avaiable.append(end)
             else:
-                j+=1
-                max_count=max(max_count, count_)
-                count_-=1
-        return max(max_count, count_)
-        
-            
-        
+                avaiable.remove(min_avai)
+                avaiable.append(end)
+            res = max(res, len(avaiable))
+        return res
+
