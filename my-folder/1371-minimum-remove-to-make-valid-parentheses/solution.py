@@ -1,21 +1,20 @@
-class Solution(object):
-    def minRemoveToMakeValid(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        s = list(s)
-        stack = []
-        for i, e in enumerate(s):
-            if e=='(':
-                stack.append(i)
-            elif e==')':
-                if stack:
-                    stack.pop()
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        ans = ''
+        left, right = 0, s.count(')')
+        for c in s:
+            if c == '(':
+                if right > 0:
+                    ans += c
+                    left += 1
+                    right -= 1
+            elif c == ')':
+                if left > 0:
+                    ans += c
+                    left -= 1
                 else:
-                    s[i]=''
-        for e in stack:
-            s[e]=''
-        return ''.join(s)
-            
-        
+                    right -= 1
+            else:
+                ans += c
+                
+        return ans
