@@ -1,18 +1,16 @@
-class Solution(object):
-    def validPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        i, j = 0, len(s)-1
-        while i<=j:
-            if s[i]==s[j]:
-                i+=1
-                j-=1
-            else:
-                break
-        
-        if i>j:
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        def check(i, j):
+            while i < j:
+                if s[i] != s[j]:
+                    return False
+                i, j = i + 1, j - 1
             return True
-        else:
-            return True if s[i:j]==s[i:j][::-1] or s[i+1:j+1]==s[i+1:j+1][::-1] else False
+
+        i, j = 0, len(s) - 1
+        while i < j:
+            if s[i] != s[j]:
+                return check(i, j - 1) or check(i + 1, j)
+            i, j = i + 1, j - 1
+        return True
+        
