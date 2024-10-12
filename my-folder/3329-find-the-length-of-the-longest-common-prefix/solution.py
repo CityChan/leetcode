@@ -4,12 +4,11 @@ class Solution:
         for x in arr1:
             while x:
                 s.add(x)
-                x = x//10
+                x = x // 10
         ans = 0
         for x in arr2:
             while x:
                 if x in s:
                     ans = max(ans, len(str(x)))
-                    break
                 x = x // 10
         return ans
