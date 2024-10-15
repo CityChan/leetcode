@@ -3,18 +3,12 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        slow = 0
-        while slow < len(nums) and nums[slow] != 0:
-            slow += 1
-
-        fast = slow
-        # nums[slow]:0
+        fast, slow = 0, 0
         while fast < len(nums):
             if nums[fast] != 0:
-                tmp = nums[fast]
-                nums[fast] = nums[slow]
-                nums[slow] = tmp
-
-            if nums[slow] != 0:
+                nums[slow] = nums[fast]
                 slow += 1
             fast += 1
+        for i in range(slow, len(nums)):
+            nums[i] = 0
+        return nums
