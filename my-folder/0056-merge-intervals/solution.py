@@ -4,19 +4,14 @@ class Solution:
         n = len(intervals)
         res = []
         res.append(intervals[0])
-        for i in range(1,n):
-            curr = intervals[i]
-            start = curr[0]
-            end = curr[1]
-            
-            prev = res[-1]
-            start_p = prev[0]
-            end_p = prev[1]
-            
-            if start <= end_p:
-                res[-1][1] = max(end_p,end)
+        for i in range(1, n):
+            interval = intervals[i]
+            pre_interval = res[-1]
+            start, end = interval[0], interval[1]
+            pre_start, pre_end = pre_interval[0], pre_interval[1]
+            if start <= pre_end:
+                res[-1][1] = max(end, pre_end)
             else:
-                res.append(curr)
+                res.append([start,end])
         return res
-
     
