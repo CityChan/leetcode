@@ -1,31 +1,37 @@
-class Solution(object):
-    def threeSum(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        if len(nums)<3:
-            return []
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
+        return self.nSumTarget(nums, 3, 0, 0)
+    
+    def nSumTarget(self, nums, n, start, target):
+        sz = len(nums)
         res = []
-        for i in range(len(nums)-2):
-            if i>0 and nums[i]==nums[i-1]:
-                continue
-            j = i+1
-            k = len(nums)-1
-            while j<k:
-                if nums[i]+nums[j]+nums[k]<0:
-                    j+=1
-                elif nums[i]+nums[j]+nums[k]>0:
-                    k-=1
+        if n < 2 or sz < n:
+            return res
+        if n == 2:
+            lo, hi = start, sz - 1
+            while lo < hi:
+                sum_val = nums[lo] + nums[hi]
+                left, right = nums[lo], nums[hi]
+                if sum_val < target:
+                    while lo < hi and nums[lo] == left:
+                        lo += 1
+                elif sum_val > target:
+                    while lo < hi and nums[hi] == right:
+                        hi -= 1
                 else:
-                    res.append([nums[i], nums[j], nums[k]])
-                    j+=1
-                    k-=1
-                    while j<len(nums) and nums[j]==nums[j-1]:
-                        j+=1
-                    while k>i and nums[k]==nums[k+1]:
-                        k-=1
+                    res.append([left,right])
+                    while lo < hi and nums[lo] == right:
+                        lo += 1
+                    while lo < hi and nums[hi] == right:
+                        hi -= 1                    
+        else:
+            for i in range(start, sz):
+                if i > start and nums[i] == nums[i - 1]:
+                    continue
+                sub = self.nSumTarget(nums, n-1, i+1, target - nums[i])
+                for arr in sub:
+                    arr.append(nums[i])
+                    res.append(arr)
         return res
-                    
 
