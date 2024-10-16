@@ -8,24 +8,18 @@ class Node:
 """
 
 class Solution:
-    def copyRandomList(self, head: 'Node') -> 'Node':
-        dict = {}
-        prev = None
-        node = head
-        
-        while node:
-            if node not in dict:
-                dict[node] = Node(node.val, node.next, node.random)
-            if prev:
-                prev.next = dict[node]
-            else:
-                head = dict[node]
-            if node.random:
-                if node.random not in dict:
-                    dict[node.random] = Node(node.random.val, node.random.next, node.random.random)
-                dict[node].random = dict[node.random]
-            
-            prev = dict[node]
-            node = node.next
-        
-        return head
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        originToClone = {}
+        p = head
+        while p:
+            if p not in originToClone:
+                originToClone[p] = Node(p.val)
+            p = p.next
+        p = head
+        while p:
+            if p.next:
+                originToClone[p].next = originToClone[p.next]
+            if p.random:
+                originToClone[p].random = originToClone[p.random]
+            p = p.next
+        return originToClone.get(head)
