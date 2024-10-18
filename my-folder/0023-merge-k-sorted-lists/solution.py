@@ -3,25 +3,21 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-from queue import PriorityQueue
 class Solution:
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        dummy = curr = ListNode(None)
-        k = len(lists)
-        queue = PriorityQueue(maxsize=k)
-        
-        for list_idx, node in enumerate(lists):
-            if node:
-                queue.put((node.val, list_idx, node))
-        
-        while queue.qsize() > 0:
-            poped = queue.get()
-            curr.next = poped[2]
-            list_idx = poped[1]
-            curr = curr.next
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if not list:
+            return None
+        dummy = ListNode(-1)
+        p = dummy
+        pq = []
+        for head in lists:
+            if head:
+                heapq.heappush(pq, (head.val, id(head), head))
             
-            if curr.next:
-                queue.put((curr.next.val, list_idx, curr.next))
-        
+        while pq:
+            node = heapq.heappop(pq)[2]
+            p.next = node
+            if node.next:
+                heapq.heappush(pq, (node.next.val, id(node.next), node.next))
+            p = p.next
         return dummy.next
-        
