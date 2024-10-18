@@ -1,14 +1,12 @@
-class Solution(object):
-    def findBuildings(self, heights):
-        """
-        :type heights: List[int]
-        :rtype: List[int]
-        """
-        res = []
-        highest = 0
-        for i, h in enumerate(heights[::-1]):
-            if h>highest:
-                res.append(i)
-            highest = max(highest, h)
-        return [len(heights)-1-i for i in res[::-1]]
-        
+class Solution:
+    def findBuildings(self, heights: List[int]) -> List[int]:
+        stk = []
+        n = len(heights)
+        stk.append(n-1)
+        for i in range(n-2, -1, -1):
+            if heights[i] > heights[stk[-1]]:
+                stk.append(i)
+        stk.sort()
+        return stk
+                
+            
