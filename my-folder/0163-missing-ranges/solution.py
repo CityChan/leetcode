@@ -1,15 +1,35 @@
 class Solution:
-    def findMissingRanges(self, nums: List[int], lower: int, upper: int) -> List[str]:
-        nums = [lower-1] + nums + [upper+1]
-        res = []
+    def findMissingRanges(self, nums: List[int], lower: int, upper: int) -> List[List[int]]:
+        if len(nums) == 0:
+            return [[lower, upper]]
+        ans = []
+        if nums[0] > lower:
+            ans.append([lower, nums[0]-1])
 
-        for i in range(len(nums) - 1):
-            if nums[i+1] - nums[i] == 2:
-                # plus one to the lower number
-                res.append(str(nums[i]+1))
-            elif nums[i+1] - nums[i] > 2:
-                # plus one of nums[i] as the lower
-                # minus one of nums[i+1] as the upper
-                res.append(str(nums[i]+1) + '->' + str(nums[i+1]-1))
-        return res
+        left, right = 0, 0
+        for i in range(len(nums)-1):
+            if lower <= nums[i] <= nums[i+1] <= upper:
+                left = nums[i] + 1
+                right = nums[i+1] - 1
+                if left <= right:
+                    ans.append([left, right])
+            elif lower <= nums[i] <= upper < nums[i+1]:
+                left = nums[i] + 1
+                right = upper - 1
+                if left <= right:
+                    ans.append([left, right])
+                break
 
+            elif  nums[i] < lower <= upper < nums[i+1]:
+                left = lower + 1
+                right = nums[i+1] - 1
+                break
+
+            elif  nums[i] < lower <= nums[i+1] < upper:
+                left = lower + 1
+                right = nums[i+1] - 1
+                if left <= right:
+                    ans.append([left, right])
+        if nums[-1] < upper:
+            ans.append([nums[-1]+1, upper])
+        return ans
