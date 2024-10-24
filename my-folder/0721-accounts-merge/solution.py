@@ -1,30 +1,41 @@
-class Solution(object):
-    def accountsMerge(self, accounts):
-        """
-        :type accounts: List[List[str]]
-        :rtype: List[List[str]]
-        """
-        def dfs(a, ori_list, temp):
-            ori_list.remove(a)
-            for i in accounts[a][1:]:
-                temp.add(i)
-                for j in email_dict[i]:
-                    if j in ori_list:
-                        dfs(j, ori_list, temp)
-            return temp
-        
-        res = []
-        email_dict = dict()
-        for i in range(len(accounts)):
-            for j in accounts[i][1:]:
-                if j not in email_dict:
-                    email_dict[j] = [i]
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        n = len(accounts)
+        uf = UnionFind(n)
+        d = {}
+        for i, (_, *emails) in enumerate(accounts):
+            for email in emails:
+                if email in d:
+                    uf.union(i, d[email])
                 else:
-                    email_dict[j] += [i]               
-        ori_list = list(range(len(accounts)))
-        while len(ori_list)>0:           
-            temp = set()
-            res+=[[accounts[ori_list[0]][0]]]
-            temp = dfs(ori_list[0], ori_list, temp)
-            res[-1]+=sorted(temp)
-        return res
+                    d[email] = i
+        g = defaultdict(set)
+        for i, (_, *emails) in enumerate(accounts):
+            root = uf.find(i)
+            g[root].update(emails)
+        print(g)
+        return [[accounts[root][0]] + sorted(emails) for root,emails in g.items()]
+
+class UnionFind:
+    def __init__(self, n):
+        self.p = list(range(n))
+        self.size = [1] * n
+
+    def find(self, x):
+        if self.p[x] != x:
+            self.p[x] = self.find(self.p[x])
+        return self.p[x]
+
+    def union(self, a, b):
+        pa, pb = self.find(a), self.find(b)
+        if pa == pb:
+            return False
+        if self.size[pa] > self.size[pb]:
+            self.p[pb] = pa
+            self.size[pa] += self.size[pb]
+        else:
+            self.p[pa] = pb
+            self.size[pb] += self.size[pa]
+        return True
+
+
