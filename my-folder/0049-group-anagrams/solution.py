@@ -1,14 +1,15 @@
-class Solution(object):
-    def groupAnagrams(self, strs):
-        """
-        :type strs: List[str]
-        :rtype: List[List[str]]
-        """
-        res = {}
-        strs_idx = [str(sorted(x)) for x in strs]
-        for i, str_ in enumerate(strs_idx):
-            if str_ not in res:
-                res[str_]=[strs[i]]
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = {}
+        for s in strs:
+            key = []
+            for c in s:
+                key.append(c)
+            key.sort(key = lambda x: ord(x))
+            key = "".join(key)
+            if key in hashmap:
+                hashmap[key].append(s)
             else:
-                res[str_]+=[strs[i]]
-        return list(res.values())
+                hashmap[key] = [s]
+        return list(hashmap.values())
+            
