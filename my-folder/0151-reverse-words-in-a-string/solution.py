@@ -1,25 +1,10 @@
-class Solution(object):
-    def reverseWords(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        chars = [t for t in s]
-        slow, n = 0, len(s)
-        for fast in range(n):
-            if chars[fast] != " " or (fast > 0 and chars[fast] == " " and chars[fast-1] != " "):
-                chars[slow] = chars[fast]
-                slow += 1
-                
-        if slow == 0: return ""       
-        chars = chars[:slow-1] if chars[-1] == " " else chars[:slow]
-        chars.reverse()
-        
-        slow, m = 0, len(chars)
-        for fast in range(m + 1):
-            if fast == m or chars[fast] == " ":
-                chars[slow:fast] = chars[slow:fast][::-1]
-                slow = fast + 1
-                
-        return "".join(chars)
-        
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        s_splited = s.split(" ")
+        s_splited.reverse()
+        ans = ""
+        for word in s_splited:
+            if len(word) == 0:
+                continue
+            ans = ans + word + " "
+        return ans[:-1]
