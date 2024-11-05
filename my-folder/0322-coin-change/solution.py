@@ -1,40 +1,25 @@
-class Solution(object):
-    def coinChange(self, coins, amount):
-        """
-        :type coins: List[int]
-        :type amount: int
-        :rtype: int
-        """
-        # if amount<0:
-        #     return 0
-        # res = [amount+1]*amount
-        # def bfs(amt):
-        #     # minimum number of coins needed for 'amt'
-        #     if amt<0:
-        #         return -1
-        #     elif amt==0:
-        #         return 0
-        #     else:
-        #         if res[amt-1]!=amount+1:
-        #             return res[amt-1]
-        #         else:
-        #             for c in coins:
-        #                 temp = bfs(amt-c)
-        #                 if temp>=0 and temp+1<res[amt-1]:
-        #                     res[amt-1] = temp+1
-        #     if res[amt-1]==amount+1:
-        #         res[amt-1]=-1
-        #     # res[amt-1] = res[amt-1] if res[amt-1]<amount+1 else -1
-        #     return res[amt-1]
-        # return bfs(amount)
-        if amount==0:
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        self.memo = [-666]*(amount + 1)
+        return self.dp(coins, amount)
+    
+    def dp(self,coins, amount):
+        if amount == 0:
             return 0
-        res = [amount+1]*amount
-        for amt in range(amount):
-            for c in coins:
-                if amt+1-c==0:
-                    res[amt]=1
-                elif amt+1-c>0:
-                    res[amt] = min(res[amt], res[amt-c]+1)
-        return res[amount-1] if res[amount-1]<amount+1 else -1
+        if amount < 0:
+            return -1
+        if self.memo[amount] != -666:
+            return self.memo[amount]
+        res = float('inf')
+        for coin in coins:
+            if self.dp(coins,amount - coin) == -1:
+                continue
+            else:
+                ans = self.dp(coins, amount - coin) + 1
+                res = min(res, ans)
+        self.memo[amount] = -1 if res == float('inf') else res
+        return self.memo[amount] 
+        
+
+        
 
