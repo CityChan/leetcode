@@ -1,21 +1,15 @@
-class Solution(object):
-    def maxSubArray(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        
-        now_subsum=nums[0]
-        max_subsum=nums[0]
-        for i in nums[1:]:
-            now_subsum = max(now_subsum+i, i)
-            max_subsum = max(now_subsum, max_subsum)
-        return max_subsum
-        # min_sum = 0
-        # max_sum = nums[0]-10001
-        # now_sum = 0
-        # for i in nums:
-        #     now_sum+=i
-        #     max_sum = max(max_sum, now_sum-min_sum)
-        #     min_sum = min(min_sum, now_sum)
-        # return max_sum        
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+        dp = [0]*n
+        dp[0] = nums[0]
+        for i in range(1, n):
+            dp[i] = max(dp[i-1] + nums[i], nums[i])
+
+        ans = -float('inf')
+        for i in range(n):
+            ans = max(ans, dp[i])
+        return ans
+
