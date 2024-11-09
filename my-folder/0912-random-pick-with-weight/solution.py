@@ -9,10 +9,10 @@ class Solution:
         x = random.randint(1, self.s[-1])
         left, right = 1, len(self.s) - 1
         while left < right:
-            mid = (left + right)//2
+            mid = left + (right - left) //2
             if self.s[mid] >= x:
                 right = mid
-            else:
+            elif self.s[mid] < x:
                 left = mid + 1
         return left - 1
 
