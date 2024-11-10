@@ -30,5 +30,5 @@ class Solution:
             self.head = root
         self.prev = root
         self.traverse(root.right)
-        
+
             
