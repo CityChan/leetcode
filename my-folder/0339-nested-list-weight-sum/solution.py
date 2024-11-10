@@ -51,7 +51,7 @@ class Solution:
             if item.isInteger():
                 depth_sum += depth*item.getInteger()
             else:
-                depth_sum += self.dfs(item.getList(), depth+1)
+                depth_sum += self.dfs(item.getList(), depth + 1)
         return depth_sum
                                 
         
