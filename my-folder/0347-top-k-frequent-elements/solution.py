@@ -9,10 +9,9 @@ class Solution:
             heapq.heappush(pq, (feq, num))
             if len(pq) > k:
                 heapq.heappop(pq)
-        res = []
+        ans = []
         for feq, num in pq:
-            res.append(num)
-        return res[::-1]
-        
+            ans.append(num)
+        return ans
         
             
