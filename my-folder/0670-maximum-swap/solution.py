@@ -1,35 +1,15 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        hashmap = {}
-        num_str = list(str(num))
-        for i in range(len(num_str)):
-            if num_str[i] in hashmap:
-                hashmap[int(num_str[i])].append(i)
-            else:
-                hashmap[int(num_str[i])] = [i]
-        keys = list(hashmap.keys())
-        keys.sort(reverse = True)
-        indexs = []
-        for key in keys:
-            indexs += hashmap[key]
-        cur = 0
-        left = 0
-        while left < len(num_str):
-            if indexs[cur] == left:
-                left += 1
-                cur +=1
-            elif int(num_str[indexs[cur]]) <= int(num_str[left]):
-                left += 1
-            else:
+        s = list(str(num))
+        n = len(s)
+        d = list(range(n))
+        for i in range(n-2, -1, -1):
+            if s[i] <= s[d[i+1]]:
+                d[i] = d[i+1]
+        
+        for i, j in enumerate(d):
+            if s[i] < s[j]:
+                s[i], s[j] = s[j], s[i]
                 break
-        if left == len(num_str):
-            return num
+        return int("".join(s))
 
-        temp = num_str[indexs[cur]]
-        num_str[indexs[cur]] = num_str[left]
-        num_str[left] = temp
-        s = ''.join(x for x in num_str)
-        return int(s)
-        
-        
-            
