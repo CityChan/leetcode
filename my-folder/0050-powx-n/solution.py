@@ -8,6 +8,5 @@ class Solution:
             return self.myPow(1/x, -n)
         if n%2 == 1:
             return x*self.myPow(x, n - 1)
-        else:
-            sub = self.myPow(x, n // 2)
-            return sub*sub
+        if n%2 == 0:
+            return self.myPow(x**2, n //2)
