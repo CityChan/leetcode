@@ -6,7 +6,7 @@ class Solution:
             a1,a2 = firstList[i][0], firstList[i][1]
             b1,b2 = secondList[j][0], secondList[j][1]
             
-            if b2 >= a1 and a2 >= b1:
+            if b2 >= a1 and  b1 <= a2:
                 res.append([max(a1,b1), min(a2,b2)])
             if b2 < a2:
                 j += 1
