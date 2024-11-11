@@ -3,15 +3,17 @@ class Solution:
         intervals.sort(key = lambda x: x[0])
         n = len(intervals)
         res = []
+        if n == 1:
+            return intervals
         res.append(intervals[0])
-        for i in range(1, n):
-            interval = intervals[i]
-            pre_interval = res[-1]
-            start, end = interval[0], interval[1]
-            pre_start, pre_end = pre_interval[0], pre_interval[1]
-            if start <= pre_end:
-                res[-1][1] = max(end, pre_end)
+        right = intervals[0][1]
+        for i in range(1,n):
+            a,b = intervals[i][0], intervals[i][1]
+            if a <= right:
+                right = max(right, b) 
+                res[-1][1] = right
             else:
-                res.append([start,end])
+                res.append([a,b])
+                right = b
         return res
-    
+
