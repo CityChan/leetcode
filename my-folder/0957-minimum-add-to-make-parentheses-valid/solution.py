@@ -1,14 +1,17 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
         need = 0
-        ans = 0
-        for c in s:
-            if c == '(':
+        res = 0
+        for i in range(len(s)):
+            if s[i] == '(':
                 need += 1
-            if c == ')':
+            if s[i] == ')':
                 if need > 0:
                     need -= 1
                 else:
-                    ans += 1
-        return ans + need
-                    
+                    res += 1
+        return res + need
+
+
+
+
