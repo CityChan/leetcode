@@ -1,23 +1,23 @@
 class Solution:
     def customSortString(self, order: str, s: str) -> str:
-        idx_order = []
-        ans_order = ""
-        for i, v in enumerate(s):
-            if v in order:
-                idx_order.append(i)
-                ans_order += v
-        counter = Counter(ans_order)
-        ans_order = ""
-        for v in order:
-            if v in s:
-                for i in range(counter[v]):
-                    ans_order += v
-        ans = ''
-        cur = 0
-        for i in range(len(s)):
-            if i in idx_order:
-                ans+= ans_order[cur]
-                cur+= 1
+        hashmap = {}
+        for i, c in enumerate(order):
+            hashmap[c] = i
+        
+        s = list(s)
+        in_order = []
+        sub_s = []
+        for i,c in enumerate(s):
+            if c in hashmap:
+                in_order.append(i)
+                sub_s.append(c)
+        sub_s.sort(key = lambda x: hashmap[x])
+        ans = []
+        for i,c in enumerate(s):
+            if c in hashmap:
+                ans.append(sub_s.pop(0))
             else:
-                ans+= s[i]
-        return ans
+                ans.append(c)
+        return "".join(ans)
+
+
