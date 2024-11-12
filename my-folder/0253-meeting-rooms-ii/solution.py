@@ -1,18 +1,15 @@
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        intervals.sort(key=lambda x: x[0])
-        avaiable = [intervals[0][1]]
-        res = 1
-        n = len(intervals)
-        for i in range(1,n):
-            start = intervals[i][0]
-            end = intervals[i][1]
-            min_avai = min(avaiable)
-            if start < min_avai:
-                avaiable.append(end)
+        intervals.sort(key = lambda x: x[0])
+        ans = 1
+        available = [intervals[0][1]]
+        for start, end in intervals[1:]:
+            if start < min(available):
+                ans += 1
             else:
-                avaiable.remove(min_avai)
-                avaiable.append(end)
-            res = max(res, len(avaiable))
-        return res
+                heapq.heappop(available)
+            heapq.heappush(available, end)
+            print(available)
 
+
+        return ans
