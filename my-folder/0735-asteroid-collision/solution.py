@@ -7,10 +7,11 @@ class Solution:
                 if abs(st[-1]) < abs(asteroid):
                     st.pop()
                     continue
-                elif abs(st[-1]) == abs(asteroid):
+                if abs(st[-1]) == abs(asteroid):
                     st.pop()
                 flag = False
                 break
-            if flag:
+            if flag == True:
                 st.append(asteroid)
         return st
+
