@@ -10,11 +10,10 @@ class Solution:
                 t.append(mat[i][j])
                 i += 1
                 j -= 1
-            if k%2:
+            print(t)
+            if (i+j)%2:
                 ans += t
             else:
                 t.reverse()
                 ans += t
-
         return ans
-            
