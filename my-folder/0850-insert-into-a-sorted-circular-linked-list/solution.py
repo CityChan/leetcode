@@ -21,9 +21,12 @@ class Solution:
                 break
             if prev.val > cur.val and (insertVal >= prev.val or insertVal <= cur.val):
                 break
+
             prev = cur
             cur = cur.next
+
         prev.next = node
         node.next = cur
         return head
-        
+
+                
