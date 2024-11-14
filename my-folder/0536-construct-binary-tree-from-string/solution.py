@@ -6,33 +6,26 @@
 #         self.right = right
 class Solution:
     def str2tree(self, s: str) -> Optional[TreeNode]:
-        cnt = 0
-        n = len(s)
-        if n == 0:
+        return self.dfs(s)
+
+    def dfs(self,s):
+        if not s:
             return None
-        indices = []
-        start, end = 0, 0
-        head_index = 0
-        while head_index < n and s[head_index] != '(' :
-            head_index += 1
-        head_num = s[:head_index]
-        head_num = int(head_num)
-        head = TreeNode(val = head_num)
-        for i in range(len(s)):
-            if s[i] == "(":
+        p = s.find('(')
+        if p == -1:
+            return TreeNode(int(s))
+        root = TreeNode(int(s[:p]))
+        start = p
+        cnt = 0
+        for i in range(p, len(s)):
+            if s[i] == '(':
                 cnt += 1
-                if cnt == 1:
-                    start = i+1
-            if s[i] == ")":
+            elif s[i] == ')':
                 cnt -= 1
-                if cnt == 0:
-                    end = i
-                    indices.append([start, end])
-                    start, end = 0, 0
-        for start, end in indices:
-            child = self.str2tree(s[start:end])
-            if head.left is None:
-                head.left = child
-            else:
-                head.right = child
-        return head
+            if cnt == 0:
+                if start == p:
+                    root.left = self.dfs(s[start + 1 : i])
+                    start = i + 1
+                else:
+                    root.right = self.dfs(s[start + 1 : i])
+        return root
