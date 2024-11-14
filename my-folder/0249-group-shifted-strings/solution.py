@@ -4,7 +4,6 @@ class Solution:
         hashmap = {}
         for s in strings:
             new_s = ""
-            first_char = s[0]
             diff = ord(s[0]) - ord('a')
             for c in s:
                 new_s += chr(ord(c) - diff if ord(c) - diff >= ord('a') else ord(c) - diff + 26)
