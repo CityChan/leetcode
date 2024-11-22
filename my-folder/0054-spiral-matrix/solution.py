@@ -1,23 +1,16 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        m,n = len(matrix), len(matrix[0])
-        visited = []
-        visited_node = 0
-        cur = [0,0]
-        dirs = [[0,1],[1,0],[0,-1],[-1,0]]
-        dir_num = 0
+        m, n = len(matrix), len(matrix[0])
+        dirs = (0, 1, 0, -1, 0)
+        i = j = k = 0
         ans = []
-        while visited_node < m*n:
-            visited_node += 1
-            i,j = cur[0],cur[1]
-            visited.append((i,j))
+        vis = set()
+        for _ in range(m * n):
             ans.append(matrix[i][j])
-            cur[0], cur[1] = i + dirs[dir_num][0], j + dirs[dir_num][1]
-            if cur[0] < 0 or cur[0] >= m or cur[1] < 0 or cur[1] >= n or (cur[0],cur[1]) in visited:
-                dir_num = (dir_num + 1) % 4
-                cur[0], cur[1] = i + dirs[dir_num][0], j + dirs[dir_num][1]
+            vis.add((i, j))
+            x, y = i + dirs[k], j + dirs[k + 1]
+            if not 0 <= x < m or not 0 <= y < n or (x, y) in vis:
+                k = (k + 1) % 4
+            i = i + dirs[k]
+            j = j + dirs[k + 1]
         return ans
-            
-        
-            
-        
