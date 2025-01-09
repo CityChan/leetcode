@@ -3,20 +3,21 @@ class Solution:
         grid = [[] for _ in range(numCourses)]
         for t,s in prerequisites:
             grid[s].append(t)
-        self.onPath = [False for _ in range(numCourses)]
+        self.path = [False for _ in range(numCourses)]
         self.visited = [False for _ in range(numCourses)]
-        self.hasCycle = False
+        self.has_cycle = False
         for i in range(numCourses):
             self.traverse(grid, i)
-        return not self.hasCycle
+        return not self.has_cycle
 
-    def traverse(self, grid, s):
-        if self.onPath[s]:
-            self.hasCycle = True
-        if self.visited[s] or self.hasCycle:
-            return    
-        self.visited[s] = True
-        self.onPath[s] = True
-        for t in grid[s]:
-            self.traverse(grid, t)
-        self.onPath[s] = False
+    def traverse(self, grid, i):
+        if self.path[i]:
+            self.has_cycle = True
+        if self.visited[i] or self.has_cycle:
+            return
+        self.path[i] = True
+        self.visited[i] = True
+        for v in grid[i]:
+            self.traverse(grid, v)
+        self.path[i] = False
+
