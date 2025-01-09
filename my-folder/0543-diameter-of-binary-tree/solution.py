@@ -7,13 +7,13 @@
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         self.maxDiameter = 0
-        self.max_height(root)
+        self.maxDepth(root)
         return self.maxDiameter
-        
-    def max_height(self, root):
+    
+    def maxDepth(self, root):
         if root is None:
             return 0
-        left_height = self.max_height(root.left)
-        right_height = self.max_height(root.right)
-        self.maxDiameter = max(self.maxDiameter, left_height + right_height)
-        return max(left_height, right_height) + 1
+        leftMax  = self.maxDepth(root.left)
+        rightMax  = self.maxDepth(root.right)
+        self.maxDiameter = max(self.maxDiameter, leftMax + rightMax)
+        return 1 + max(leftMax, rightMax)
